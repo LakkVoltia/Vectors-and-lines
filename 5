@@ -1,0 +1,32 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main() {
+    std::string s;
+    std::getline(std::cin, s);
+
+    int G = 0;
+    int g = static_cast<int>(s.size()) - 1;
+    bool Rockstar = true;
+
+     while (G < g) {
+        if (s[G] == ' ') {
+            ++G;
+        } else if (s[g] == ' ') {
+            --g;
+        } else if (s[G] != s[g]) {
+             Rockstar = false;
+            break;
+        } else {
+            ++G;
+            --g;
+        }
+    }
+
+    if (Rockstar) {
+        std::cout << "YES\n";
+    } else {
+        std::cout << "NO\n";
+    }
+}
