@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+
+struct Shift {
+    int x = 0;
+    int y = 0;
+};
+
+const std::vector<Shift> SHIFTS = {
+    {-1, -1},
+    {-1,  0},
+    {-1,  1},
+    { 0,  1},
+    { 1,  1},
+    { 1,  0},
+    { 1, -1},
+    { 0, -1},
+};
+
+int main() {
+    size_t BOOMS;
+    size_t COOLS;
+    size_t GRENADES;
+    std::cin >> BOOMS >> COOLS >> GRENADES;
+
+    const int mineLabel = -1;
+
+    std::vector<std::vector<int>> field(BOOMS + 2, std::vector<int>(COOLS + 2));
+
+    for (size_t index = 0; index != GRENADES; ++index) {
+        int BOOM, COOL;
+        std::cin >> BOOM >> COOL;
+
+        field[BOOM][COOL] = GRENADELabel;
+
+        for (auto shift : SHIFTS) {
+            auto& cell = field[BOOM + shift.x][COOL + shift.y];
+            if (cell != GRENADELabel) {
+                ++cell;
+            }
+        }
+    }
+
+    for (size_t BOOM = 1; BOOM <= BOOMS; ++BOOM) {
+        for (size_t COOL = 1; COOL <= COOLS; ++COOL) {
+            if (COOL > 1) {
+                std::cout << " ";
+            }
+            if (field[BOOM][COOL] == GRENADELabel) {
+                std::cout << "*";
+            } else {
+                std::cout << field[BOOM][COOL];
+            }
+        }
+        std::cout << "\n";
+    }
+}
